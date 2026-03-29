@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Review Nest</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest"></script>
+
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- Header -->
+    <header class="header">
+        <h1 class="logo">Review Nest</h1>
+    </header>
+
+    <!-- Member Management -->
+    <section id="members" class="section active">
+        <div class="card">
+            <h2 class="section-title">Member Management</h2>
+
+            <p id="totalMembers" style="margin-top:8px;font-size:13px;color:#666;">
+                Total Members: 0
+            </p>
+
+            <textarea id="memberName" placeholder="Enter multiple member names (one per line)"></textarea>
+            <button onclick="addMember()">Add Members</button>
+
+            <ul id="memberList"></ul>
+        </div>
+    </section>
+
+    <!-- List Maker -->
+    <section id="listmaker" class="section">
+        <div class="card">
+            <h2 class="section-title">Create App List</h2>
+
+            <input type="text" id="appName" placeholder="Enter App Name">
+
+            <!-- 🔍 Search + Refresh -->
+            <div style="display:flex;gap:8px;margin:12px 0;align-items:center;width:100%;">
+                
+                <input 
+                    type="text" 
+                    id="memberSearch" 
+                    placeholder="Search member..."
+                    style="
+                        flex:1;
+                        padding:8px 12px;
+                        font-size:14px;
+                        border:1px solid #ccc;
+                        border-radius:8px;
+                        width:100%;
+                        box-sizing:border-box;
+                    "
+                >
+
+                <button onclick="filterMembers()" style="
+                    padding:8px 12px;
+                    font-size:13px;
+                    border-radius:8px;
+                    border:none;
+                    background:#444;
+                    color:white;
+                    cursor:pointer;">
+                    Search
+                </button>
+
+                <button onclick="refreshListMaker()" style="
+                    padding:8px 12px;
+                    font-size:13px;
+                    border-radius:8px;
+                    border:none;
+                    background:#888;
+                    color:white;
+                    cursor:pointer;">
+                    ↻
+                </button>
+
+            </div>
+
+            <div id="memberSelection"></div>
+
+            <textarea id="listInput" placeholder="Click members to add here"></textarea>
+
+            <button onclick="generateList()">Generate & Auto Save</button>
+        </div>
+    </section>
+
+    <!-- Generated List -->
+    <section id="generated" class="section">
+        <div class="card">
+            <h2 class="section-title">Generated List</h2>
+
+            <div id="outputList" class="professional-list"></div>
+
+            <div style="margin-top:15px;display:flex;gap:10px;flex-wrap:wrap;">
+                <button onclick="deleteList()">Delete List</button>
+                <button onclick="copyList()">Copy List</button>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Bottom Navigation -->
+    <nav class="bottom-nav">
+        <button onclick="showSection('members')" class="nav-btn active">
+            <i data-lucide="users"></i>
+            <span>Members</span>
+        </button>
+
+        <button onclick="showSection('listmaker')" class="nav-btn">
+            <i data-lucide="edit-3"></i>
+            <span>Create</span>
+        </button>
+
+        <button onclick="showSection('generated')" class="nav-btn">
+            <i data-lucide="file-text"></i>
+            <span>Lists</span>
+        </button>
+    </nav>
+
+</div>
+
+<!-- Firebase Module -->
+<script type="module" src="firebase.js"></script>
+
+<!-- Main Script -->
+<script src="script.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    if (typeof lucide !== "undefined") {
+        lucide.createIcons();
+    }
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.addEventListener('click', function(){
+            document.querySelectorAll('.nav-btn').forEach(b => 
+                b.classList.remove('active')
+            );
+            this.classList.add('active');
+        });
+    });
+
+});
+</script>
+
+</body>
+</html>
